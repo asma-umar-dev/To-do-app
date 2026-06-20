@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TaskFlow Pro — Professional Task Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">⚡</div>
+      <div>
+        <div class="brand-name">TaskFlow</div>
+        <div class="brand-badge">PRO</div>
+      </div>
+    </div>
+
+    <div class="sidebar-user" onclick="navTo('settings')">
+      <div class="user-avatar" id="userAvatar">A</div>
+      <div class="user-info">
+        <div class="user-name" id="sidebarUserName">Asma Umar</div>
+        <div class="user-status">Active</div>
+      </div>
+    </div>
+
+    <nav class="nav-section">
+      <div class="nav-label">Main</div>
+
+      <div class="nav-item active" onclick="navTo('dashboard')" id="nav-dashboard">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="14" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+          <rect x="14" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+        </svg>
+        Dashboard
+      </div>
+
+      <div class="nav-item" onclick="navTo('tasks')" id="nav-tasks">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-width="2" stroke-linecap="round" d="M9 12l2 2 4-4M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/>
+        </svg>
+        My Tasks
+        <span class="nav-badge" id="navBadge">0</span>
+      </div>
+
+      <div class="nav-item" onclick="navTo('categories')" id="nav-categories">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-width="2" stroke-linecap="round" d="M7 7h.01M3 11V5a2 2 0 012-2h6l8 8a2 2 0 010 2.828l-6 6a2 2 0 01-2.828 0L3 11z"/>
+        </svg>
+        Categories
+      </div>
+
+      <div class="nav-item" onclick="navTo('analytics')" id="nav-analytics">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-width="2" stroke-linecap="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+        Analytics
+      </div>
+
+      <div class="nav-item" onclick="navTo('settings')" id="nav-settings">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-width="2" stroke-linecap="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+          <circle cx="12" cy="12" r="3" stroke-width="2"/>
+        </svg>
+        Settings
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="dark-toggle" onclick="toggleDark()">
+        <span>🌙</span>
+        <span>Dark Mode</span>
+        <div class="toggle-switch" id="darkToggle">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- ========== MAIN ========== -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <button class="hamburger" onclick="openSidebar()">
+        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-width="2" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <div>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="topbar-sub" id="topbarSub">Welcome back to your workspace</div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <svg class="search-icon" width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" stroke-width="2"/>
+            <path stroke-width="2" stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" placeholder="Search tasks… (Ctrl+K)" id="searchInput" oninput="handleSearch(this.value)"/>
+        </div>
+        <button class="btn-add" onclick="openAddModal()">
+          <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-width="2.5" stroke-linecap="round" d="M12 5v14M5 12h14"/>
+          </svg>
+          New Task
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <div class="content">
+
+      <!-- ===== DASHBOARD VIEW ===== -->
+      <div class="view active" id="view-dashboard">
+
+        <div class="welcome-card">
+          <div class="welcome-time">
+            <div class="time-display" id="timeDisplay">--:--</div>
+            <div class="time-period" id="timePeriod">Loading...</div>
+          </div>
+          <div class="welcome-greeting">Good morning,</div>
+          <div class="welcome-name" id="welcomeName">Asma Umar 👋</div>
+          <div class="welcome-date" id="welcomeDate">Loading...</div>
+          <div class="welcome-quote">"The secret of getting ahead is getting started."</div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card total">
+            <div class="stat-icon">📋</div>
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Total Tasks</div>
+            <div class="stat-delta">All time</div>
+          </div>
+          <div class="stat-card completed">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value" id="statDone">0</div>
+            <div class="stat-label">Completed</div>
+            <div class="stat-delta" style="color:var(--success)">Well done!</div>
+          </div>
+          <div class="stat-card pending">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-value" id="statPending">0</div>
+            <div class="stat-label">Pending</div>
+            <div class="stat-delta" style="color:var(--warning)">In progress</div>
+          </div>
+          <div class="stat-card progress">
+            <div class="stat-icon">📈</div>
+            <div class="stat-value" id="statPct">0%</div>
+            <div class="stat-label">Completion Rate</div>
+            <div class="stat-delta" style="color:#EC4899">Keep going!</div>
+          </div>
+        </div>
+
+        <div class="dash-bottom">
+          <div class="recent-tasks-card">
+            <div class="section-header">
+              <div class="section-title">Recent Tasks</div>
+              <a class="section-link" onclick="navTo('tasks')">View all →</a>
+            </div>
+            <div id="recentTasksList"></div>
+            <div class="empty-state" id="recentEmpty">
+              <div class="empty-icon">📝</div>
+              <div class="empty-title">No tasks yet</div>
+              <div class="empty-sub">Create your first task to get started</div>
+            </div>
+          </div>
+
+          <div class="progress-card">
+            <div class="section-title" style="margin-bottom:20px">Progress Overview</div>
+            <div class="progress-ring">
+              <div class="ring-wrap">
+                <svg width="140" height="140" viewBox="0 0 140 140">
+                  <defs>
+                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#6366F1"/>
+                      <stop offset="100%" stop-color="#8B5CF6"/>
+                    </linearGradient>
+                  </defs>
+                  <circle class="ring-bg" cx="70" cy="70" r="60"/>
+                  <circle class="ring-fill" id="ringFill" cx="70" cy="70" r="60"/>
+                </svg>
+                <div class="ring-center">
+                  <div class="ring-pct" id="ringPct">0%</div>
+                  <div class="ring-sub">Complete</div>
+                </div>
+              </div>
+              <div class="progress-stats">
+                <div class="progress-stat">
+                  <span class="progress-stat-label"><span class="dot" style="background:#6366F1"></span>Total</span>
+                  <span class="progress-stat-val" id="ps-total">0</span>
+                </div>
+                <div class="progress-stat">
+                  <span class="progress-stat-label"><span class="dot" style="background:#10B981"></span>Done</span>
+                  <span class="progress-stat-val" id="ps-done">0</span>
+                </div>
+                <div class="progress-stat">
+                  <span class="progress-stat-label"><span class="dot" style="background:#F59E0B"></span>Pending</span>
+                  <span class="progress-stat-val" id="ps-pending">0</span>
+                </div>
+                <div class="progress-stat">
+                  <span class="progress-stat-label"><span class="dot" style="background:#EF4444"></span>Overdue</span>
+                  <span class="progress-stat-val" id="ps-overdue">0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TASKS VIEW ===== -->
+      <div class="view" id="view-tasks">
+        <div class="tasks-toolbar">
+          <div class="filter-tabs">
+            <button class="filter-tab active" onclick="setFilter('all',this)">All</button>
+            <button class="filter-tab" onclick="setFilter('pending',this)">Pending</button>
+            <button class="filter-tab" onclick="setFilter('completed',this)">Completed</button>
+            <button class="filter-tab" onclick="setFilter('overdue',this)">Overdue</button>
+            <button class="filter-tab" onclick="setFilter('high',this)">High Priority</button>
+          </div>
+          <select class="sort-select" onchange="setSortOrder(this.value)">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="priority">By Priority</option>
+            <option value="due">By Due Date</option>
+            <option value="alpha">Alphabetical</option>
+          </select>
+        </div>
+        <div class="tasks-list" id="tasksList"></div>
+        <div class="empty-state" id="tasksEmpty">
+          <div class="empty-icon">🎯</div>
+          <div class="empty-title">No tasks found</div>
+          <div class="empty-sub">Try changing your filter or create a new task</div>
+        </div>
+      </div>
+
+      <!-- ===== CATEGORIES VIEW ===== -->
+      <div class="view" id="view-categories">
+        <div class="cats-grid" id="catsGrid"></div>
+      </div>
+
+      <!-- ===== ANALYTICS VIEW ===== -->
+      <div class="view" id="view-analytics">
+        <div class="analytics-grid">
+          <div class="analytics-card">
+            <div class="section-title">📊 Tasks by Priority</div>
+            <div class="bar-chart" id="priorityChart"></div>
+          </div>
+          <div class="analytics-card">
+            <div class="section-title">🗂 Tasks by Category</div>
+            <div class="bar-chart" id="categoryChart"></div>
+          </div>
+          <div class="analytics-card analytics-full">
+            <div class="section-title">💡 Daily Productivity Insights</div>
+            <div class="insight-list" id="insightList"></div>
+          </div>
+          <div class="analytics-card analytics-full">
+            <div class="section-title">🔥 Activity Heatmap (Last 28 Days)</div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:16px">
+              <div class="heat-label">Sun</div><div class="heat-label">Mon</div>
+              <div class="heat-label">Tue</div><div class="heat-label">Wed</div>
+              <div class="heat-label">Thu</div><div class="heat-label">Fri</div>
+              <div class="heat-label">Sat</div>
+            </div>
+            <div class="heatmap" id="heatmap"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SETTINGS VIEW ===== -->
+      <div class="view" id="view-settings">
+        <div class="settings-sections">
+
+          <div class="settings-section">
+            <div class="settings-title">👤 Profile</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <label>Display Name</label>
+                <p>This appears in your dashboard greeting</p>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <input class="settings-input" type="text" id="settingsName" placeholder="Your name"/>
+                <button class="btn-sm btn-primary" onclick="saveName()">Save</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-title">🎨 Appearance</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <label>Dark Mode</label>
+                <p>Switch between light and dark themes</p>
+              </div>
+              <div class="dark-toggle" style="border:1px solid var(--card-border);border-radius:8px" onclick="toggleDark()">
+                <span style="font-size:13px;color:var(--text-secondary)">Toggle</span>
+                <div class="toggle-switch" id="darkToggle2"><div class="toggle-knob"></div></div>
+              </div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <label>Accent Color</label>
+                <p>Personalize your workspace</p>
+              </div>
+              <div class="theme-options">
+                <div class="theme-opt active" style="background:linear-gradient(135deg,#6366F1,#8B5CF6)" onclick="setAccent('#6366F1','#8B5CF6',this)" title="Indigo"></div>
+                <div class="theme-opt" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)" onclick="setAccent('#0EA5E9','#0284C7',this)" title="Sky"></div>
+                <div class="theme-opt" style="background:linear-gradient(135deg,#10B981,#059669)" onclick="setAccent('#10B981','#059669',this)" title="Emerald"></div>
+                <div class="theme-opt" style="background:linear-gradient(135deg,#F59E0B,#D97706)" onclick="setAccent('#F59E0B','#D97706',this)" title="Amber"></div>
+                <div class="theme-opt" style="background:linear-gradient(135deg,#EC4899,#DB2777)" onclick="setAccent('#EC4899','#DB2777',this)" title="Pink"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-title">⌨️ Keyboard Shortcuts</div>
+            <div class="settings-row">
+              <div class="settings-row-info"><label>New Task</label></div>
+              <div><span class="kbd">Ctrl</span> + <span class="kbd">N</span></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><label>Search</label></div>
+              <div><span class="kbd">Ctrl</span> + <span class="kbd">K</span></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><label>Dashboard</label></div>
+              <div><span class="kbd">Ctrl</span> + <span class="kbd">1</span></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><label>My Tasks</label></div>
+              <div><span class="kbd">Ctrl</span> + <span class="kbd">2</span></div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-title">⚠️ Danger Zone</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <label>Reset All Data</label>
+                <p>Permanently delete all tasks and categories</p>
+              </div>
+              <button class="btn-sm btn-danger" onclick="confirmReset()">Reset Data</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  Built with ❤️ by <span>Asma Umar</span> · TaskFlow Pro &copy; 2026 · All rights reserved
+</footer>
+
+<!-- ========== ADD / EDIT TASK MODAL ========== -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modalIcon">✨</span>
+      <span id="modalTitleText">New Task</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Task Title *</label>
+      <input class="form-input" id="taskTitle" type="text" placeholder="What needs to be done?"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-textarea" id="taskDesc" rows="2" placeholder="Add details about this task…"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Priority</label>
+        <select class="form-select" id="taskPriority">
+          <option value="medium">⚡ Medium</option>
+          <option value="high">🔴 High</option>
+          <option value="low">🟢 Low</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="taskCategory">
+          <option value="Work">💼 Work</option>
+          <option value="Personal">👤 Personal</option>
+          <option value="Study">📚 Study</option>
+          <option value="Health">💪 Health</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Due Date</label>
+      <input class="form-input" id="taskDue" type="date"/>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('taskModal')">Cancel</button>
+      <button class="btn-submit" onclick="saveTask()">Save Task</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== DELETE CONFIRM MODAL ========== -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:380px;text-align:center">
+    <div class="del-modal-icon">🗑️</div>
+    <div class="modal-title" style="justify-content:center">Delete Task</div>
+    <div class="del-modal-msg">Are you sure you want to delete this task? This action cannot be undone.</div>
+    <div class="modal-footer" style="justify-content:center;margin-top:20px">
+      <button class="btn-cancel" onclick="closeModal('deleteModal')">Keep It</button>
+      <button class="btn-del-confirm" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TOAST CONTAINER ========== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script src="script.js"></script>
+
+</body>
+</html>
